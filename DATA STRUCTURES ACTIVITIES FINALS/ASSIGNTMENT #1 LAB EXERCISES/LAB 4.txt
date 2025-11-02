@@ -1,0 +1,19 @@
+//LAB 4
+#include <iostream>
+using namespace std;
+
+int main() {
+    int grade;
+    cout << "Enter grade: ";
+    cin >> grade;
+
+    if (grade >= 75) {
+        cout << "Pass" << endl;
+        cout << "Congratulations!" << endl;
+        cout << "Keep up the good work.";
+    } else {
+        cout << "Fail";
+    }
+
+    return 0;
+}
