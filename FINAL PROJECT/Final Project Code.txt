@@ -1,0 +1,151 @@
+//GROUP 10 - aray ko alam mo ha
+#include <iostream>
+using namespace std;
+
+struct BankAccount {    
+	int id;  
+	int pin;
+	int balance;
+	string name;
+};
+
+int main () {
+	//stored accounts using struct
+	BankAccount account1;
+	account1.id = 20269;
+	account1.pin = 2025;
+	account1.balance = 1000;
+	account1.name = "JB";
+	
+	BankAccount account2;
+	account2.id = 12345;  
+	account2.pin = 1234;
+	account2.balance = 1000;
+	account2.name = "Doblas";
+	
+	BankAccount account3;
+	account3.id = 54321;
+	account3.pin = 4321;
+	account3.balance = 1000;
+	account3.name = "Moldez";
+	
+	BankAccount account4;
+	account4.id = 2468;  
+	account4.pin = 2000;
+	account4.balance = 1000;
+	account4.name = "Devesfruto";
+	
+	//logged account will point to null until it has one
+	BankAccount *loggedAccount = NULL; 
+	
+	//data types, variable used
+	int id, pin, amount;
+	int attempt = 5;
+	int choice;
+	char backMenu;
+	
+	//simple user interface (UI)
+	cout << "            Welcome to the Bank++!" << endl;
+    cout << "<>===================<>====================<>" << endl;
+    cout << "    A simple banking simulation using C++" << endl;
+    cout << "\nPlease enter your ID and PIN to log in." << endl;
+    cout << "Enter your ID: ";
+    cin >> id;
+    
+    //login interface - ID
+    if (id == account1.id) {
+    	loggedAccount = &account1;
+	} else if (id == account2.id) {
+		loggedAccount = &account2;
+	} else if (id == account3.id) {
+		loggedAccount = &account3;
+	} else if (id == account4.id) {
+		loggedAccount = &account4;
+	} else {
+		cout << "Access denied. ID cannot be found.";
+		return 0; 
+	}
+ 	
+ 	//login interface - PIN
+ 	while (attempt > 0) {
+ 		cout << "Enter your PIN: ";
+ 		cin >> pin;
+ 		
+ 		if (pin == loggedAccount->pin) {   
+ 		    cout << "\nWelcome " << loggedAccount->name << "!";   
+ 			break;
+ 		} else {
+ 			attempt--;
+ 			if (attempt > 0) {
+ 				cout << "Incorrect PIN. Please try again." << endl;
+			}
+		}
+ 	}
+ 	
+ 	//once all attempts have been used, the account will be blocked.
+	if (attempt == 0) {
+		cout << "Your account is blocked for 29:59. Try again later";
+		return 0;
+	}		
+ 	
+ 	//main menu / transactions menu
+ 	do {
+ 		cout << "\n====== MAIN MENU ======" << endl;
+ 		cout << "1. Check Balance \n2. Deposit \n3. Withdraw \n4. Logout" << endl;
+ 		cout << "\nEnter your choice: ";
+ 		cin >> choice;
+ 		
+ 		switch (choice) {
+ 			case 1:
+ 				cout << "Your balance: " << loggedAccount->balance << endl;
+ 				cout << "\nPress Enter to back to the menu...";
+ 				cin.ignore();
+ 				cin.get();
+ 				break;
+ 				
+ 			case 2:
+ 				cout << "\nEnter amount to deposit: ";
+ 				cin >> amount;
+ 				
+ 				if (amount > 0) {
+ 					loggedAccount->balance += amount;
+ 					cout << "Deposit successful. Your balance: " << loggedAccount->balance << endl;
+				} else {
+					cout << "Invalid deposit amount.";
+				}
+				
+				cout << "\nPress Enter to back to the menu...";
+ 				cin.ignore();
+ 				cin.get();
+ 				break;
+ 				
+ 			case 3:
+ 				cout << "\nEnter amount to withdraw: ";
+ 				cin >> amount;
+ 				
+ 				if (amount <= 0) {
+ 					cout << "Invalid withdrawal amount." << endl;
+				} else if (amount > loggedAccount->balance) {
+					cout << "Not enough balance." << endl;
+				} else {
+					loggedAccount->balance -= amount;
+					cout << "Withdrawal successful. Remaining balance: " << loggedAccount->balance << endl;
+				}
+ 				
+ 				cout << "\nPress Enter to back to the menu...";
+ 				cin.ignore();
+ 				cin.get();
+ 				break;
+ 				
+ 			case 4:
+ 				cout << "\nThank you for using the Bank++!";
+ 				return 0;
+ 				
+ 			default:
+ 				cout << "Invalid choice. Please try again." << endl;
+		}
+ 		
+	} while (true);
+ 	
+	return 0;
+}
